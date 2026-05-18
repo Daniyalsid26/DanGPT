@@ -1,10 +1,9 @@
 import os
 import numpy as np
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from sentence_transformers import SentenceTransformer
-import faiss
+from fastembed import TextEmbedding
 from groq import Groq
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
@@ -47,14 +46,13 @@ def load_chunks(path: str = "data.txt", chunk_size: int = 120, overlap: int = 20
 
 
 print("Loading embedding model...")
-_embed_model = SentenceTransformer("all-MiniLM-L6-v2")
+_embed_model = TextEmbedding("sentence-transformers/all-MiniLM-L6-v2")
 
-print("Building FAISS index...")
+print("Building vector index...")
 _chunks = load_chunks()
-_embeddings = _embed_model.encode(_chunks, show_progress_bar=False, convert_to_numpy=True).astype("float32")
-faiss.normalize_L2(_embeddings)
-_index = faiss.IndexFlatIP(_embeddings.shape[1])
-_index.add(_embeddings)
+_embeddings = np.array(list(_embed_model.embed(_chunks)), dtype="float32")
+# Normalise once so search is a plain dot-product (cosine similarity)
+_embeddings /= np.linalg.norm(_embeddings, axis=1, keepdims=True)
 print(f"Index ready — {len(_chunks)} chunks.")
 
 # ---------------------------------------------------------------------------
@@ -88,13 +86,14 @@ async def health():
 @app.post("/chat")
 @limiter.limit("5/minute")
 async def chat(request: Request, body: ChatRequest):
-    # Embed query
-    query_vec = _embed_model.encode([body.message], show_progress_bar=False, convert_to_numpy=True).astype("float32")
-    faiss.normalize_L2(query_vec)
+    # Embed query and normalise
+    query_vec = np.array(list(_embed_model.embed([body.message]))[0], dtype="float32")
+    query_vec /= np.linalg.norm(query_vec)
 
-    # Retrieve top-3 chunks
-    _, indices = _index.search(query_vec, k=3)
-    context = "\n\n---\n\n".join(_chunks[i] for i in indices[0])
+    # Cosine similarity via dot-product, take top-3
+    scores = _embeddings @ query_vec
+    top_idx = np.argsort(scores)[-3:][::-1]
+    context = "\n\n---\n\n".join(_chunks[i] for i in top_idx)
 
     # Call Groq (Llama-3)
     completion = _groq.chat.completions.create(
