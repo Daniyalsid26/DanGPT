@@ -1,0 +1,140 @@
+<!--
+  STEP 1: Paste this block right above your </body> tag in index.html
+  STEP 2: Replace YOUR_RENDER_URL with your actual Render URL
+-->
+
+<!-- DanGPT Chat Widget -->
+<style>
+  #dangpt-toggle {
+    position: fixed; bottom: 24px; right: 24px; z-index: 1000;
+    background: #2563eb; color: #fff; border: none; border-radius: 50%;
+    width: 56px; height: 56px; font-size: 26px; cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25); transition: background 0.2s;
+  }
+  #dangpt-toggle:hover { background: #1d4ed8; }
+  #dangpt-box {
+    display: none; position: fixed; bottom: 92px; right: 24px; z-index: 1000;
+    width: 340px; max-height: 480px; background: #fff; border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.18); display: flex; flex-direction: column;
+    overflow: hidden; font-family: inherit;
+  }
+  #dangpt-box.hidden { display: none !important; }
+  #dangpt-header {
+    background: #2563eb; color: #fff; padding: 14px 18px;
+    font-weight: 600; font-size: 15px; display: flex; justify-content: space-between;
+  }
+  #dangpt-messages {
+    flex: 1; overflow-y: auto; padding: 14px; display: flex;
+    flex-direction: column; gap: 10px; min-height: 200px; max-height: 300px;
+  }
+  .dg-msg { max-width: 85%; padding: 9px 13px; border-radius: 12px; font-size: 14px; line-height: 1.5; }
+  .dg-user { align-self: flex-end; background: #2563eb; color: #fff; border-bottom-right-radius: 3px; }
+  .dg-bot  { align-self: flex-start; background: #f1f5f9; color: #1e293b; border-bottom-left-radius: 3px; }
+  .dg-typing { align-self: flex-start; background: #f1f5f9; color: #94a3b8; font-size: 13px;
+    padding: 9px 13px; border-radius: 12px; border-bottom-left-radius: 3px; }
+  #dangpt-input-row { display: flex; padding: 10px; border-top: 1px solid #e2e8f0; gap: 8px; }
+  #dangpt-input {
+    flex: 1; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px;
+    font-size: 14px; outline: none;
+  }
+  #dangpt-send {
+    background: #2563eb; color: #fff; border: none; border-radius: 8px;
+    padding: 8px 14px; cursor: pointer; font-size: 14px; transition: background 0.2s;
+  }
+  #dangpt-send:hover { background: #1d4ed8; }
+</style>
+
+<button id="dangpt-toggle" title="Chat with DanGPT">💬</button>
+<div id="dangpt-box" class="hidden">
+  <div id="dangpt-header">
+    <span>DanGPT — Ask about Daniyal</span>
+    <span id="dangpt-close" style="cursor:pointer">✕</span>
+  </div>
+  <div id="dangpt-messages">
+    <div class="dg-msg dg-bot">Hi! Ask me anything about Daniyal's skills, projects, or experience.</div>
+  </div>
+  <div id="dangpt-input-row">
+    <input id="dangpt-input" type="text" placeholder="e.g. What did you build for the hackathon?" maxlength="400" />
+    <button id="dangpt-send">Send</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    // ⚠️ Replace this with your actual Render URL after deployment
+    const BACKEND_URL = "https://YOUR_RENDER_URL.onrender.com/chat";
+
+    const toggle = document.getElementById("dangpt-toggle");
+    const box    = document.getElementById("dangpt-box");
+    const close  = document.getElementById("dangpt-close");
+    const input  = document.getElementById("dangpt-input");
+    const send   = document.getElementById("dangpt-send");
+    const msgs   = document.getElementById("dangpt-messages");
+
+    let isOpen = false;
+
+    toggle.addEventListener("click", () => {
+      isOpen = !isOpen;
+      box.classList.toggle("hidden", !isOpen);
+      if (isOpen) input.focus();
+    });
+    close.addEventListener("click", () => { isOpen = false; box.classList.add("hidden"); });
+
+    function appendMessage(text, role) {
+      const el = document.createElement("div");
+      el.className = "dg-msg " + (role === "user" ? "dg-user" : "dg-bot");
+      el.textContent = text;
+      msgs.appendChild(el);
+      msgs.scrollTop = msgs.scrollHeight;
+      return el;
+    }
+
+    function appendTyping() {
+      const el = document.createElement("div");
+      el.className = "dg-typing";
+      el.textContent = "Thinking…";
+      msgs.appendChild(el);
+      msgs.scrollTop = msgs.scrollHeight;
+      return el;
+    }
+
+    async function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = "";
+      send.disabled = true;
+
+      appendMessage(text, "user");
+      const typingEl = appendTyping();
+
+      try {
+        const res = await fetch(BACKEND_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text }),
+        });
+
+        typingEl.remove();
+
+        if (res.status === 429) {
+          appendMessage("You're sending messages too fast. Please wait a moment.", "bot");
+        } else if (!res.ok) {
+          appendMessage("Something went wrong. Please try again.", "bot");
+        } else {
+          const data = await res.json();
+          appendMessage(data.reply, "bot");
+        }
+      } catch (e) {
+        typingEl.remove();
+        appendMessage("Could not reach DanGPT. The server may be warming up — try again in 30 seconds.", "bot");
+      } finally {
+        send.disabled = false;
+        input.focus();
+      }
+    }
+
+    send.addEventListener("click", sendMessage);
+    input.addEventListener("keydown", (e) => { if (e.key === "Enter") sendMessage(); });
+  })();
+</script>
+<!-- End DanGPT Chat Widget -->

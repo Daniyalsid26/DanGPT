@@ -1,0 +1,99 @@
+# DANIYAL SIDDIQUI — FULL PROFILE & CV
+
+## Personal Summary
+Name: Daniyal Siddiqui
+Title: AI Research Developer & Mechanical Engineer
+Location: United Kingdom
+Experience: 3+ years shipping production AI systems
+Email: daniyalsid26@gmail.com
+LinkedIn: https://linkedin.com/in/mds98
+GitHub: https://github.com/daniyalsid26
+Website: https://muhammaddanial.dev
+
+Daniyal Siddiqui is an AI Research Developer and Mechanical Engineer with over 3 years of experience building production ML systems, data automation pipelines, and sustainability-focused AI applications. He has built production systems serving 150,000+ users, won a competitive agentic AI hackathon, and has deep expertise across the full ML stack from model development to cloud deployment.
+
+## Core Expertise & Skills
+
+### Machine Learning
+TensorFlow, PyTorch, Scikit-learn, model training, evaluation, and deployment.
+
+### Deep Learning
+Neural Networks, CNNs, designing and training deep learning architectures.
+
+### Natural Language Processing (NLP)
+Transformers, BERT, GPT, semantic similarity, text classification, OCR post-processing, prompt engineering.
+
+### Agentic AI & Orchestration
+LangChain, LangGraph, ReAct tool calling, Human-in-the-Loop patterns, agentic memory, multi-step reasoning pipelines.
+
+### Cloud Platforms
+AWS, Google Cloud Platform (GCP), Google Cloud Build, CI/CD pipelines.
+
+### MLOps & DevOps
+Docker, CI/CD, FastAPI microservices, deployment automation, containerization.
+
+### Tech Stack
+Python, SQL, GCP, WhyML, Bash, JIRA/Confluence, Power BI, Tableau, LangChain, FastAPI, Docker, Node.js, Express.js, Hedera SDK.
+
+## Projects
+
+### AgentCommerce — Agentic AI Hackathon Winner, 2026
+Built a decentralized e-commerce platform merging AI agents with Web3 and Hedera blockchain. Won the Agentic Society hackathon in April 2026.
+
+The pitch: a Shopify vendor installs one plugin and their entire catalogue goes live on a decentralized registry, instantly discoverable by AI agents. No migration, no new dashboard — just one click from the Shopify App Store and you're in the agentic economy.
+
+How it works:
+1. Shopify vendor installs the AgentCommerce plugin → catalogue published to Hedera blockchain registry
+2. User says "buy batteries"
+3. AI agent searches the registry, finds the lowest price, executes a real HBAR cryptocurrency payment
+4. Transaction settles on-chain, order submitted back to the vendor's Shopify for fulfilment
+
+Daniyal built the interactive AI shopping agent and the backend glue — Node.js, Express, Hedera SDK, plus a CLI and web interface for demo purposes. The agent pipeline was intentionally linear: parse intent → query inventory → rank → pay → confirm. This ensured no ambiguity in control flow when real crypto was moving.
+
+The hardest part was wiring the AI agent to a live blockchain at 3am during the hackathon. Transaction confirmation times don't care about deadlines. A particularly painful stretch involved Hedera's message payload chunking. Despite this, the team shipped and won.
+
+The judges praised the end-to-end integration — not just an agent that talks, but one that spends real currency and triggers real fulfilment. The Shopify plugin angle was the differentiator: this was a product any vendor could adopt immediately, not just a developer demo.
+
+Tech used: Node.js, Express, Hedera SDK, HBAR, Shopify, Agentic AI, x402, CLI/Web UI.
+GitHub: https://github.com/Daniyalsid26/agentic-ai-hack
+
+### Recommendation System — VEChain GreenCart, 2025
+Developed a recommendation system for a sustainable shopping application with 150,000+ active users.
+
+Key work:
+- Extensively cleaned noisy OCR data using NLP techniques and regex patterns.
+- Used transformer models to detect semantic similarity between items.
+- Deployed the model as a production microservice serving 150k users using FastAPI, Docker, and Google Cloud Build.
+- Established a full CI/CD pipeline for automated deployment.
+- Achieved 65% accuracy in recommending sustainable affiliate items to users.
+
+Tech used: Docker, PyTorch, Google Cloud Build, FastAPI, Regex Patterns, Transformers.
+GitHub: https://github.com/Daniyalsid26/Recommendation_System
+
+### Formal Verification of Python Code using Why3 — UOG CS2, 2025
+Built an automated LangGraph framework to formally verify Python code using LLMs.
+
+Key work:
+- Designed a graph architecture to call tools, parse outputs, and implement Human-in-the-Loop patterns.
+- Undertook extensive prompt engineering: creating system prompts and calling tools to generate formally verified outputs.
+- Used agentic memory and ReAct tool calling patterns.
+
+Tech used: LangGraph, Prompt Engineering, Agentic Memory, ReAct Tool Calling, Regex Patterns.
+GitHub: https://github.com/mtaimoorkhan/TrustedCode
+Video Demo: https://youtu.be/Nr5I2g8ec-s
+
+## Education
+Daniyal holds an engineering background (Mechanical Engineering) combined with strong self-taught AI/ML skills and formal university computer science coursework (UOG CS2 mentioned in project context).
+
+## Professional Background
+- AI Research Developer focused on intelligent systems, agentic workflows, and production ML.
+- Background combines Mechanical Engineering and AI/ML, giving a unique perspective on physical-digital systems.
+- 3+ years experience shipping AI to production.
+- Open to AI project collaboration, consulting, and new challenges.
+- Based in the United Kingdom.
+
+## Contact
+Email: daniyalsid26@gmail.com
+LinkedIn: https://linkedin.com/in/mds98
+GitHub: https://github.com/daniyalsid26
+Website: https://muhammaddanial.dev
