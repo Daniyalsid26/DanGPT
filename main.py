@@ -95,9 +95,9 @@ async def chat(request: Request, body: ChatRequest):
     top_idx = np.argsort(scores)[-3:][::-1]
     context = "\n\n---\n\n".join(_chunks[i] for i in top_idx)
 
-    # Call Groq (Llama-3)
+    # Call Groq (Llama-3.1)
     completion = _groq.chat.completions.create(
-        model="llama3-8b-8192",
+        model="llama-3.1-8b-instant",
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {
