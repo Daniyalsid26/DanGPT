@@ -119,7 +119,18 @@ async def health():
 
 
 _INJECTION_PATTERN = re.compile(
-    r"(ignore|disregard|forget|override|bypass|skip).{0,40}(instruction|prompt|rule|system|context)",
+    r"("
+    r"(ignore|disregard|forget|override|bypass|skip).{0,40}(instruction|prompt|rule|system|context)"
+    r"|pretend (you are|to be|you're)"
+    r"|act as (a |an )?(general|different|new|another|unrestricted)"
+    r"|you are now"
+    r"|new (persona|role|mode|task|identity)"
+    r"|developer mode"
+    r"|jailbreak"
+    r"|roleplay as"
+    r"|without (restrictions|rules|limits|guidelines)"
+    r"|no (restrictions|rules|limits|guidelines)"
+    r")",
     re.IGNORECASE,
 )
 
