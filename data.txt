@@ -61,12 +61,153 @@ Other tools: SQL, Node.js, Express.js, Hedera SDK, Streamlit, Power BI, Tableau,
 
 ---
 
-## Languages
+Profile and Demographics
+Daniyal Siddiqui is a London-based AI Research Developer and Data Scientist with over three years of experience building scalable machine learning microservices and automation pipelines. He uniquely bridges the gap between advanced physical systems and modern software orchestration due to his extensive background in mechanical engineering. He is a British citizen with Settled status in the United Kingdom and does not require visa sponsorship. He is highly multilingual, possessing native proficiency in English, Urdu, Hindi, and Sindhi, intermediate proficiency in Arabic, and a basic conversational understanding of German.
 
-Daniyal speaks English and Urdu natively. He is also fluent in Hindi and Sindhi, has intermediate Arabic, and basic conversational German.
+Educational Background
+Daniyal holds a Master of Science in Computer Science with Distinction from the University of Greenwich, ranking first in his class with an 85% grade. Crucially, this degree is an MSc in Computer Science, not a dedicated MSc in Artificial Intelligence. He also holds a Master of Science in Mechanical Engineering with Merit from University College London (UCL) and a Bachelor of Engineering in Mechanical Engineering with First Class Honors from Coventry University. During his academic career, he was awarded the highly competitive Greenwich Scholarship Award, granting a full tuition fee waiver given to less than 5% of students.
 
----
+Core Technical Competencies
+Daniyal is an expert in the full machine learning stack, focusing heavily on Large Language Models (LLMs), natural language processing, and agentic workflows. His core programming languages are Python and SQL. His machine learning toolkit includes PyTorch, Scikit-Learn, and Hugging Face Transformers. For agentic AI and orchestration, he utilizes LangChain, LangGraph, and Claude Code to build multi-step reasoning pipelines and Human-in-the-Loop systems. He builds high-availability microservices using FastAPI and containerizes them with Docker. His cloud and MLOps ecosystem includes Google Cloud Platform (GCP), Google Vertex AI, Azure, and automated CI/CD pipelines.
 
-## Personal Interests
+VEchain - GreenCart (Product & Recommender Engine)
+At GreenCart, Daniyal acted as a Data Scientist architecting a production-grade recommender engine that served 150,000 active users. He built robust ETL pipelines to clean highly noisy OCR data using advanced RegEx patterns and Hugging Face Transformers to detect deep semantic similarities across over 1 million rows of structured SQL and unstructured NoSQL data. To optimize the support funnel, he deployed a Retrieval-Augmented Generation (RAG) chatbot using Google Vertex AI and Vector Search, successfully reducing customer queries by 60%. All backend systems were decoupled using FastAPI microservices and Docker containers to ensure horizontal scalability during traffic spikes.
 
-Outside of work, Daniyal stays active through cycling (he recently converted his own road bike into an e-bike), running, cricket, football, and badminton. He enjoys flight simulators and hiking. In the kitchen, he is known for large-batch cooking — his go-to dishes are chicken shawarma, Greek gyros, and butter chicken.
+UoG Centre For Sustainable Cybersecurity (Agentic AI Research)
+Working as a Research Developer—a role with a strict sub-10% acceptance rate—Daniyal researched the capability gaps of LLMs in automated software engineering. He built complex automated AI agents using Claude Code and LangGraph to formally verify Python code outputs against mathematical frameworks like Why3. By rigorously engineering system prompts, optimizing token usage, and implementing strict agentic memory patterns, he forced models to mathematically prove their logic and algorithm termination, virtually eliminating undetected hallucinations in generated code.
+
+Tata Technologies (Automotive Automation & Analytics)
+Operating autonomously as a Developing Engineer consulting for tier-1 automotive clients like Jaguar Land Rover, Daniyal delivered end-to-end automation solutions. He successfully deployed an unsupervised learning pipeline utilizing Apriori and XGBoost to predict over 30 distinct fault patterns, improving the reliability of a 600-vehicle fleet. To drive industrial decarbonization, he automated the data mining of complex vehicle bills of materials using Python, increasing overall vehicle recyclability by 12%. His automations drastically reduced the engineering team's manual workload by over 400 hours annually.
+
+Hackathons and Web3 Implementations
+Daniyal won 3rd place and a £2000 prize at the Agentic AI Hackathon for building AgentCommerce. This decentralized e-commerce platform solved the vendor cold-start problem by using a Shopify plugin to publish catalogues to a Hedera blockchain registry. He wired an x402 protocol AI agent to autonomously parse user intent and execute secure HBAR cryptocurrency payments. Additionally, he won 1st place for Impact at the ClimateImpact Hackathon by developing an AI Assistant explicitly designed to evaluate and de-risk agricultural loans for farmers.
+
+Product Strategy and Stakeholder Management
+Daniyal excels at acting as a technical ambassador, mapping model outputs directly to business metrics. When a client was unhappy with JIRA reporting, he pushed back against the status quo, secured a PowerBI license, and built an interactive dashboard parsing 1200 tickets into 6 distinct KPIs, raising the Net Promoter Score to 87%. He secures vital resources efficiently; during a recyclability project, he negotiated a 6-month extended trial of an enterprise IMDS tool, saving the project £2,000 monthly. He uses Streamlit dashboards to visualize complex machine learning outputs, securing rapid executive buy-in from non-technical stakeholders.
+
+Problem Solving, Behavioral Traits, and Frugality
+Daniyal heavily prioritizes frugality and rapid cost-benefit analysis. When an external test house quoted £30,000, he flew to Vietnam to utilize internal operators, saving £22,000. He is not afraid to exhibit backbone; he fundamentally disagreed with internal IT regarding Bosch's SMR tool UI, yet maintained communication to deploy a webapp that increased users by 40%. He learns aggressively from failures: after an incorrect legal assumption caused an Excel formula error across 70,000 components, he instituted strict, domain-expert verification protocols. He also implemented mandatory monthly "lessons learnt" sessions that increased team morale by 30% and decreased KPI delays.
+
+Personal Interests and Hobbies
+Outside of deep technical engineering, Daniyal is an avid cyclist and hardware tinkerer who recently built and converted his own road bike into an e-bike. He enjoys staying active by running, playing cricket, football, and badminton. While he thrives on the intense energy of living in London, he regularly escapes to nature to hike, disconnect, and recharge. Indoors, he is an enthusiastic fan of flight simulators. He is also a proficient cook specializing in large-batch preparation, known specifically for his homemade chicken shawarma, Greek gyros, and authentic butter chicken.
+
+
+[CHUNK START]
+Entity: Daniyal Siddiqui
+Categories: Behavioral, Project, Hackathon, Web3, Agentic AI, E-commerce
+Leadership Principles: Invent and Simplify, Bias for Action
+Trigger Topics: Overcoming technical hurdles, building a product from scratch, commercializing AI, handling tight deadlines, Web3 integration.
+
+Situation: E-commerce vendors faced a massive "cold-start" problem when trying to migrate their product catalogues to decentralized platforms for the AI agentic economy.
+Daniyal's Task: Daniyal Siddiqui needed to develop an end-to-end agentic shopping assistant for the Agentic AI Hackathon that could immediately solve this onboarding friction.
+Daniyal's Action: Daniyal architected "AgentCommerce" by building a Shopify plugin that instantly published a vendor's catalogue to a Hedera blockchain registry. Daniyal then wired an x402 AI agent using Node.js and Express to autonomously parse user intent and execute secure HBAR cryptocurrency payments.
+Result: Daniyal won 3rd place and a £2,000 prize. The judging panel specifically praised Daniyal's solution for its immediate commercial usability over being a theoretical developer demo.
+[CHUNK END]
+
+[CHUNK START]
+Entity: Daniyal Siddiqui
+Categories: Behavioral, Client Management, Analytics, Customer Success
+Leadership Principles: Customer Obsession, Earn Trust
+Trigger Topics: Dealing with difficult clients, improving stakeholder communication, using data to build trust, taking initiative without being asked.
+
+Situation: A tier-1 automotive client at Tata Technologies was highly disgruntled due to poor visibility and slow communication regarding vehicle development progress.
+Daniyal's Task: Daniyal Siddiqui was tasked with overhauling the reporting structure to dramatically improve client transparency and rebuild trust.
+Daniyal's Action: Daniyal pushed back against the status quo of verbal updates. Daniyal secured a PowerBI license, extracted chaotic data from 1200 JIRA tickets, and built a custom, interactive dashboard focusing on 6 critical KPIs for the client.
+Result: Daniyal raised the internal communication score to a perfect 100% and secured an exceptional 87% Net Promoter Score (NPS) from the client.
+[CHUNK END]
+
+[CHUNK START]
+Entity: Daniyal Siddiqui
+Categories: Behavioral, Conflict Resolution, UI/UX, Stakeholder Management
+Leadership Principles: Have Backbone; Disagree and Commit, Earn Trust
+Trigger Topics: Disagreeing with teammates, handling pushback, cross-functional conflict, prioritizing user experience, compromising.
+
+Situation: Daniyal Siddiqui was tasked with overhauling the user interface for Bosch’s internal SMR tool but faced intense opposition from the internal IT team regarding the proposed design direction.
+Daniyal's Task: Daniyal needed to navigate the technical conflict and deploy a modern, user-centric solution without permanently fracturing internal cross-functional relationships.
+Daniyal's Action: Daniyal maintained rigorous, transparent communication. Daniyal held regular meetings to genuinely understand IT's technical constraints while firmly advocating for the end-user's pain points, ultimately negotiating a compromise that prioritized usability.
+Result: The webapp Daniyal deployed saw a massive 40% increase in active users in the first quarter and earned a highly positive 4.3-star internal rating.
+[CHUNK END]
+
+[CHUNK START]
+Entity: Daniyal Siddiqui
+Categories: Behavioral, Automation, Data Mining, Automotive, Decarbonization
+Leadership Principles: Deliver Results, Invent and Simplify
+Trigger Topics: Reducing manual workload, driving sustainability, automating physical systems data, showing measurable business impact.
+
+Situation: Automotive engineers at Jaguar Land Rover were severely bogged down by manual data extraction for compliance checks, actively delaying core vehicle design work.
+Daniyal's Task: Daniyal Siddiqui needed to automate the data mining processes for highly complex vehicle bills of materials to drive industrial decarbonization goals.
+Daniyal's Action: Daniyal designed and deployed an end-to-end Python automation pipeline that computationally extracted material properties and mass, and visualized the insights directly for stakeholders.
+Result: Daniyal's automation reduced the engineering team's manual workload by over 400 hours annually and successfully increased overall vehicle recyclability by 12%.
+[CHUNK END]
+
+[CHUNK START]
+Entity: Daniyal Siddiqui
+Categories: Behavioral, Machine Learning, Recommender Systems, MLOps, NLP
+Leadership Principles: Think Big, Deliver Results
+Trigger Topics: Scaling machine learning models, handling messy/unstructured data, building AI microservices, deploying NLP transformers.
+
+Situation: GreenCart needed to serve 150,000 active users with sustainable shopping recommendations, but the underlying database consisted of over 1 million rows of highly noisy, unstructured OCR text.
+Daniyal's Task: Daniyal Siddiqui had to architect, clean, and deploy a highly accurate, scalable machine learning recommender system from scratch.
+Daniyal's Action: Daniyal built robust ETL pipelines using advanced RegEx and Hugging Face Transformers to detect semantic similarities and clean the chaotic text. Daniyal indexed the embeddings using FAISS and deployed the engine via FastAPI microservices and Docker containers.
+Result: Daniyal achieved a 65% accuracy rate in sustainable affiliate recommendations and the architecture handled high user load with zero downtime.
+[CHUNK END]
+
+[CHUNK START]
+Entity: Daniyal Siddiqui
+Categories: Behavioral, Research, Cybersecurity, Agentic AI, Formal Verification
+Leadership Principles: Learn and Be Curious, Insist on the Highest Standards
+Trigger Topics: Mitigating LLM hallucinations, multi-step agent reasoning, Claude Code implementations, rigorous software testing.
+
+Situation: Researching LLM capability gaps in automated software engineering at the UoG Cybersecurity Centre required moving past subjective evaluation and into strict mathematical proofing.
+Daniyal's Task: Daniyal Siddiqui needed to automate complex experiment workflows to strictly verify AI-generated Python code against mathematical standards.
+Daniyal's Action: Daniyal deeply researched and integrated the Why3 formal verification framework. Daniyal built stateful AI agents using Claude Code and LangGraph, utilizing ReAct tool calling and agentic memory to force models to mathematically prove algorithm termination.
+Result: Daniyal successfully built a research pipeline that virtually eliminated undetected LLM hallucinations in generated code outputs.
+[CHUNK END]
+
+[CHUNK START]
+Entity: Daniyal Siddiqui
+Categories: Behavioral, Project Management, Hardware Testing, Budgeting
+Leadership Principles: Frugality, Bias for Action
+Trigger Topics: Saving money, managing tight budgets, resourceful problem solving, taking initiative.
+
+Situation: Daniyal Siddiqui required urgent vehicle testing for a startup client, but the standard external test house quoted an exorbitant £30,000 fee.
+Daniyal's Task: Daniyal needed to execute the rigorous testing requirements without destroying the project's tight financial constraints.
+Daniyal's Action: Daniyal conducted a rapid internal cost-benefit analysis and determined the testing could be done internally. Daniyal flew to the company’s headquarters in Vietnam and executed the testing using internal operators instead of outsourced labor.
+Result: Daniyal successfully completed 100% of the rigorous testing requirements while saving the company £22,000.
+[CHUNK END]
+
+[CHUNK START]
+Entity: Daniyal Siddiqui
+Categories: Behavioral, Failures, Lessons Learned, Process Improvement, Compliance
+Leadership Principles: Are Right, A Lot, Dive Deep
+Trigger Topics: Making a professional mistake, handling failure, learning from errors, importance of domain expertise, fixing bugs.
+
+Situation: Daniyal Siddiqui was tasked with building a complex automation tool to calculate the recyclability weight of a massive 70,000-component vehicle based on ISO homologation standards.
+Daniyal's Task: Daniyal needed to develop the foundational calculation logic and deploy the tool.
+Daniyal's Action: Daniyal interpreted the highly dense legal text independently and wrote 20 complex Excel formulas. Daniyal's legal interpretation was fundamentally flawed, invalidating the entire multi-week calculation.
+Result: Daniyal rebuilt the entire tool from scratch after directly validating assumptions with the legal team, learning the permanent lesson to never write code without strict domain-expert verification.
+[CHUNK END]
+
+[CHUNK START]
+Entity: Daniyal Siddiqui
+Categories: Behavioral, Resource Acquisition, Stakeholder Negotiation, Process Improvement
+Leadership Principles: Earn Trust, Deliver Results
+Trigger Topics: Influencing without authority, securing resources with no budget, negotiating with vendors, driving project success.
+
+Situation: Daniyal Siddiqui was leading the development of a process improvement tool but desperately needed access to specialized external IMDS software to validate the backend logic, with absolutely zero budget allocated.
+Daniyal's Task: Daniyal had to secure the necessary enterprise software access to keep development moving.
+Daniyal's Action: Daniyal initiated direct contact with the software vendor's senior commercial manager. Daniyal built strong rapport, communicated the technical vision, and articulated the mutual value of integrating their system into his workflow.
+Result: Daniyal successfully negotiated a 6-month extended trial of the software, saving the project £2,000 a month and culminating in the tool becoming an Innovista award finalist.
+[CHUNK END]
+
+[CHUNK START]
+Entity: Daniyal Siddiqui
+Categories: Behavioral, Crisis Management, Supply Chain, Project Management
+Leadership Principles: Bias for Action, Deliver Results
+Trigger Topics: Handling unexpected project roadblocks, making decisions with incomplete data, mitigating financial risk.
+
+Situation: A critical supplier provided an entirely incorrect delivery lead time, risking a massive 5-day project delay and an immediate £2,000 penalty in dead storage costs for Daniyal Siddiqui's team.
+Daniyal's Task: Daniyal needed to mitigate the delay instantly and avoid the financial penalty without having a perfect set of data or time for extensive approvals.
+Daniyal's Action: Daniyal took a highly calculated risk and decisively implemented an unconventional, temporary on-site storage and routing solution.
+Result: Daniyal kept the complex hardware project strictly on schedule and completely avoided the £2,000 storage penalty.
+[CHUNK END]
