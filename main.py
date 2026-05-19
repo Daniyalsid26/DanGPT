@@ -106,6 +106,11 @@ class ChatRequest(BaseModel):
 # ---------------------------------------------------------------------------
 # Endpoints
 # ---------------------------------------------------------------------------
+@app.get("/")
+async def root():
+    return {"status": "ok"}
+
+
 @app.get("/health")
 async def health():
     return {"status": "ok", "ready": _index_ready}
