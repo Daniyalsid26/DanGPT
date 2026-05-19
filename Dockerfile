@@ -12,6 +12,7 @@ RUN uv pip install --system --no-cache -r requirements-heavy.txt
 
 # Pre-download ONNX embedding model into a known path baked into the image
 ENV FASTEMBED_CACHE_PATH=/app/.fastembed_cache
+ENV PYTHONUNBUFFERED=1
 RUN python -c "from fastembed import TextEmbedding; list(TextEmbedding('sentence-transformers/all-MiniLM-L6-v2').embed(['warmup']))"
 
 # --- Light deps (fastapi, uvicorn, groq, etc.)

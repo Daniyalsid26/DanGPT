@@ -1,6 +1,7 @@
 import os
+import threading
 import numpy as np
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from fastembed import TextEmbedding
@@ -32,8 +33,14 @@ app.add_middleware(
 )
 
 # ---------------------------------------------------------------------------
-# Build RAG index at startup
+# RAG index — built in background so uvicorn binds immediately
 # ---------------------------------------------------------------------------
+_embed_model = None
+_chunks: list[str] = []
+_embeddings = None
+_index_ready = False
+
+
 def load_chunks(path: str = "data.txt", chunk_size: int = 120, overlap: int = 20) -> list[str]:
     with open(path, "r", encoding="utf-8") as f:
         text = f.read()
@@ -45,15 +52,20 @@ def load_chunks(path: str = "data.txt", chunk_size: int = 120, overlap: int = 20
     return chunks
 
 
-print("Loading embedding model...")
-_embed_model = TextEmbedding("sentence-transformers/all-MiniLM-L6-v2")
+def _build_index() -> None:
+    global _embed_model, _chunks, _embeddings, _index_ready
+    print("Loading embedding model...", flush=True)
+    _embed_model = TextEmbedding("sentence-transformers/all-MiniLM-L6-v2")
+    print("Building vector index...", flush=True)
+    _chunks = load_chunks()
+    _embeddings = np.array(list(_embed_model.embed(_chunks)), dtype="float32")
+    _embeddings /= np.linalg.norm(_embeddings, axis=1, keepdims=True)
+    _index_ready = True
+    print(f"Index ready — {len(_chunks)} chunks.", flush=True)
 
-print("Building vector index...")
-_chunks = load_chunks()
-_embeddings = np.array(list(_embed_model.embed(_chunks)), dtype="float32")
-# Normalise once so search is a plain dot-product (cosine similarity)
-_embeddings /= np.linalg.norm(_embeddings, axis=1, keepdims=True)
-print(f"Index ready — {len(_chunks)} chunks.")
+
+# Start immediately; uvicorn binds to port while this runs in the background
+threading.Thread(target=_build_index, daemon=True).start()
 
 # ---------------------------------------------------------------------------
 # Groq client
@@ -96,12 +108,15 @@ class ChatRequest(BaseModel):
 # ---------------------------------------------------------------------------
 @app.get("/health")
 async def health():
-    return {"status": "ok"}
+    return {"status": "ok", "ready": _index_ready}
 
 
 @app.post("/chat")
 @limiter.limit("10/minute")
 async def chat(request: Request, body: ChatRequest):
+    if not _index_ready:
+        raise HTTPException(status_code=503, detail="Service is warming up, please try again in a moment.")
+
     # Embed query and normalise
     query_vec = np.array(list(_embed_model.embed([body.message]))[0], dtype="float32")
     query_vec /= np.linalg.norm(query_vec)
