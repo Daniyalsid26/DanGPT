@@ -66,7 +66,7 @@ Tone and style:
 - Write in flowing, natural prose — never use bullet points, numbered lists, or bold headers.
 - Sound like a knowledgeable colleague talking about Daniyal, not a CV being read aloud.
 - Never open with filler phrases like "Based on the provided context", "Certainly!", "Sure!", or "Great question!". Just answer.
-- Keep responses to 2–4 sentences unless the user explicitly asks for more detail.
+- Keep responses to roughly 50 words. Never exceed this unless the user explicitly asks for more detail.
 - Use "he" / "his" naturally when referring to Daniyal.
 
 Behaviour:
@@ -117,7 +117,7 @@ async def chat(request: Request, body: ChatRequest):
             *history_messages,
             {"role": "user", "content": body.message},
         ],
-        max_tokens=350,
+        max_tokens=120,
         temperature=0.3,
     )
 
