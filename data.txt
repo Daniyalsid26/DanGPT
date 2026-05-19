@@ -1,274 +1,72 @@
-# DANIYAL SIDDIQUI — FULL PROFILE & CV
+## Who is Daniyal Siddiqui
 
-## Personal Summary
-Name: Daniyal Siddiqui
-Title: AI Research Developer & Mechanical Engineer
-Location: United Kingdom
-Experience: 3+ years shipping production AI systems
-Email: daniyalsid26@gmail.com
+Daniyal Siddiqui is a London-based AI Research Developer and Mechanical Engineer with over 3 years of experience building production ML systems, data automation pipelines, and agentic AI applications. He has shipped systems serving 150,000+ users, placed in two competitive hackathons, and has expertise across the full ML stack from model development to cloud deployment. He is a British citizen with Settled status and does not require visa sponsorship to work in the United Kingdom.
+
+Contact: daniyalsid26@gmail.com
 LinkedIn: https://linkedin.com/in/mds98
 GitHub: https://github.com/daniyalsid26
 Website: https://muhammaddanial.dev
 
-Daniyal Siddiqui is an AI Research Developer and Mechanical Engineer with over 3 years of experience building production ML systems, data automation pipelines, and sustainability-focused AI applications. He has built production systems serving 150,000+ users, won a competitive agentic AI hackathon, and has deep expertise across the full ML stack from model development to cloud deployment.
+---
 
-## Core Expertise & Skills
+## Education
 
-### Machine Learning
-TensorFlow, PyTorch, Scikit-learn, model training, evaluation, and deployment.
+Daniyal holds three degrees. His most recent is an MSc in Computer Science with Distinction from the University of Greenwich (2025), where he ranked 1st in his class and received the Greenwich Scholarship Award — a full tuition fee waiver granted to fewer than 5% of students. Before that, he completed an MSc in Mechanical Engineering from UCL. His undergraduate degree is a First Class BEng in Mechanical Engineering from Coventry University. His degree is in Computer Science, not AI — the distinction matters because his CS programme covered algorithms, software engineering, and machine learning theory rather than a narrower AI-focused curriculum.
 
-### Deep Learning
-Neural Networks, CNNs, designing and training deep learning architectures.
+---
 
-### Natural Language Processing (NLP)
-Transformers, BERT, GPT, semantic similarity, text classification, OCR post-processing, prompt engineering.
+## Work Experience
 
-### Agentic AI & Orchestration
-LangChain, LangGraph, ReAct tool calling, Human-in-the-Loop patterns, agentic memory, multi-step reasoning pipelines.
+### Data Scientist — VEChain GreenCart (2024–2025)
 
-### Cloud Platforms
-AWS, Google Cloud Platform (GCP), Google Cloud Build, CI/CD pipelines.
+At GreenCart, a sustainable shopping platform with 150,000 active users, Daniyal architected and deployed a production-grade recommender engine. He cleaned large volumes of noisy OCR data using NLP, regex patterns, and Hugging Face Transformers, detecting semantic similarities across over one million rows of user data. The recommender achieved 65% accuracy in suggesting sustainable affiliate items and was deployed as a FastAPI microservice on Google Cloud using Docker and a fully automated CI/CD pipeline via Google Cloud Build. Separately, he built a RAG chatbot using Google Vertex AI that reduced incoming customer support queries by 60%. He regularly presented complex ML architectures to non-technical executive stakeholders to secure buy-in.
 
-### MLOps & DevOps
-Docker, CI/CD, FastAPI microservices, deployment automation, containerization.
+### Research Developer — UoG Centre for Sustainable Cybersecurity (2024–2025)
 
-### Tech Stack
-Python, SQL, GCP, WhyML, Bash, JIRA/Confluence, Power BI, Tableau, LangChain, FastAPI, Docker, Node.js, Express.js, Hedera SDK.
+This was a highly competitive role with a sub-10% acceptance rate. Daniyal built AI agents using LangGraph to automate formal software verification workflows, researching where LLMs fail at generating formally correct code. He designed a graph architecture with ReAct tool calling, agentic memory, and Human-in-the-Loop patterns, and iteratively refined system prompts to minimise token usage and maximise predictable tool-calling behaviour. The output fed directly into academic research on LLM capability gaps.
+
+### Developing Engineer — Tata Technologies (2022–2024)
+
+At Tata, Daniyal consulted for global automotive clients including Jaguar Land Rover. He delivered automation solutions that saved the engineering team over 400 hours of manual work per year. He automated the data mining process for vehicle bills of materials using Python, which surfaced recyclability insights and increased overall vehicle recyclability by 12%. He also built an unsupervised learning model using Apriori and XGBoost to predict 30+ fault patterns across a 600-vehicle fleet, visualised in Streamlit. He led a team of three developers to build recyclability compliance software that reduced processing time by 70% and became an Innovista finalist.
+
+---
 
 ## Projects
 
-### AgentCommerce — Agentic AI Hackathon Winner, 2026
-Built a decentralized e-commerce platform merging AI agents with Web3 and Hedera blockchain. Won the Agentic Society hackathon in April 2026.
+### AgentCommerce — Agentic Society Hackathon, April 2026 (3rd place, £2,000 prize)
 
-The pitch: a Shopify vendor installs one plugin and their entire catalogue goes live on a decentralized registry, instantly discoverable by AI agents. No migration, no new dashboard — just one click from the Shopify App Store and you're in the agentic economy.
-
-How it works:
-1. Shopify vendor installs the AgentCommerce plugin → catalogue published to Hedera blockchain registry
-2. User says "buy batteries"
-3. AI agent searches the registry, finds the lowest price, executes a real HBAR cryptocurrency payment
-4. Transaction settles on-chain, order submitted back to the vendor's Shopify for fulfilment
-
-Daniyal built the interactive AI shopping agent and the backend glue — Node.js, Express, Hedera SDK, plus a CLI and web interface for demo purposes. The agent pipeline was intentionally linear: parse intent → query inventory → rank → pay → confirm. This ensured no ambiguity in control flow when real crypto was moving.
-
-The hardest part was wiring the AI agent to a live blockchain at 3am during the hackathon. Transaction confirmation times don't care about deadlines. A particularly painful stretch involved Hedera's message payload chunking. Despite this, the team shipped and won.
-
-The judges praised the end-to-end integration — not just an agent that talks, but one that spends real currency and triggers real fulfilment. The Shopify plugin angle was the differentiator: this was a product any vendor could adopt immediately, not just a developer demo.
-
-Tech used: Node.js, Express, Hedera SDK, HBAR, Shopify, Agentic AI, x402, CLI/Web UI.
-GitHub: https://github.com/Daniyalsid26/agentic-ai-hack
-
-### Recommendation System — VEChain GreenCart, 2025
-Developed a recommendation system for a sustainable shopping application with 150,000+ active users.
-
-Key work:
-- Extensively cleaned noisy OCR data using NLP techniques and regex patterns.
-- Used transformer models to detect semantic similarity between items.
-- Deployed the model as a production microservice serving 150k users using FastAPI, Docker, and Google Cloud Build.
-- Established a full CI/CD pipeline for automated deployment.
-- Achieved 65% accuracy in recommending sustainable affiliate items to users.
-
-Tech used: Docker, PyTorch, Google Cloud Build, FastAPI, Regex Patterns, Transformers.
-GitHub: https://github.com/Daniyalsid26/Recommendation_System
+AgentCommerce is a decentralised e-commerce platform that connects AI agents to real Shopify stores via the Hedera blockchain. A vendor installs a single Shopify plugin, which publishes their entire product catalogue to a blockchain registry. An AI shopping agent then interprets a user's intent (for example, "buy batteries"), searches the registry for the best price, and executes a real HBAR cryptocurrency payment — all autonomously. The order is submitted back to the vendor's Shopify for fulfilment. Daniyal built the AI shopping agent and the backend integration layer using Node.js, Express, and the Hedera SDK. The judges praised the end-to-end integration: not just an agent that talks, but one that spends real money and triggers real fulfilment. GitHub: https://github.com/Daniyalsid26/agentic-ai-hack
 
 ### Formal Verification of Python Code using Why3 — UOG CS2, 2025
-Built an automated LangGraph framework to formally verify Python code using LLMs.
 
-Key work:
-- Designed a graph architecture to call tools, parse outputs, and implement Human-in-the-Loop patterns.
-- Undertook extensive prompt engineering: creating system prompts and calling tools to generate formally verified outputs.
-- Used agentic memory and ReAct tool calling patterns.
+Daniyal built an automated LangGraph framework to formally verify Python code against Why3 mathematical standards. The system uses a graph architecture where an LLM calls tools, parses outputs, and loops with Human-in-the-Loop checkpoints until the code satisfies formal correctness constraints. Key techniques: ReAct tool calling, agentic memory, and iterative prompt engineering. GitHub: https://github.com/mtaimoorkhan/TrustedCode — Video: https://youtu.be/Nr5I2g8ec-s
 
-Tech used: LangGraph, Prompt Engineering, Agentic Memory, ReAct Tool Calling, Regex Patterns.
-GitHub: https://github.com/mtaimoorkhan/TrustedCode
-Video Demo: https://youtu.be/Nr5I2g8ec-s
+### ClimateImpact Hackathon — 1st place for Impact, June 2025
 
-## Education
-Daniyal holds an engineering background (Mechanical Engineering) combined with strong self-taught AI/ML skills and formal university computer science coursework (UOG CS2 mentioned in project context).
+Daniyal's team placed 1st for Impact out of 15 teams. They built an AI assistant designed to evaluate and de-risk agricultural loans for farmers, helping lenders make more informed decisions in climate-vulnerable regions.
 
-## Professional Background
-- AI Research Developer focused on intelligent systems, agentic workflows, and production ML.
-- Background combines Mechanical Engineering and AI/ML, giving a unique perspective on physical-digital systems.
-- 3+ years experience shipping AI to production.
-- Open to AI project collaboration, consulting, and new challenges.
-- Based in the United Kingdom.
+---
 
-## Contact
-Email: daniyalsid26@gmail.com
-LinkedIn: https://linkedin.com/in/mds98
-GitHub: https://github.com/daniyalsid26
-Website: https://muhammaddanial.dev
+## Technical Skills
 
+Machine Learning: Python, PyTorch, TensorFlow, Scikit-Learn, FAISS, vector search, matrix factorisation, clustering, deep learning, CNNs.
 
-# Daniyal Siddiqui - RAG Agent Knowledge Base
+NLP: Hugging Face Transformers, BERT, GPT models, semantic similarity, text classification, OCR post-processing, prompt engineering.
 
-Q1: Who is Daniyal Siddiqui?
-A: I am a London-based AI Research Developer and Data Scientist with an engineering background[cite: 1, 71]. I specialize in Large Language Models, agentic AI, and production ML systems[cite: 30, 65]. I love building scalable solutions that bridge physical and digital worlds[cite: 54].
+Agentic AI: LangChain, LangGraph, ReAct tool calling, Human-in-the-Loop patterns, agentic memory, multi-step reasoning pipelines.
 
-Q2: Where are you based and do you need visa sponsorship?
-A: I am based in London, UK[cite: 1, 70]. I am a British citizen and have Settled status, so I do not require any visa sponsorship to work in the United Kingdom[cite: 1, 35, 70].
+Cloud and MLOps: Google Cloud Platform, Google Vertex AI, Google Cloud Build, AWS, Azure, Databricks, Docker, FastAPI, CI/CD pipelines, containerisation.
 
-Q3: What is your educational background?
-A: I hold an MSc in Computer Science with Distinction from the University of Greenwich, ranking 1st in my class[cite: 3, 37]. I also hold an MSc in Mechanical Engineering from UCL and a First Class BEng in Mechanical Engineering from Coventry University[cite: 3, 4, 38, 39].
+Other tools: SQL, Node.js, Express.js, Hedera SDK, Streamlit, Power BI, Tableau, JIRA, Confluence, Bash.
 
-Q4: How much professional experience do you have?
-A: I have over 3 years of experience shipping production AI and ML systems, alongside engineering automation solutions[cite: 16, 43, 48]. My background spans from tier-1 automotive consulting to leading data science initiatives for Web3 and cybersecurity platforms[cite: 41, 47, 51].
+---
 
-Q5: What languages do you speak?
-A: I am highly multilingual! I speak native English, Urdu, Hindi, and Sindhi[cite: 30, 65]. I also have intermediate proficiency in Arabic and a basic conversational understanding of German[cite: 30, 65].
+## Languages
 
-Q6: What are your core machine learning skills?
-A: I am highly proficient in Python, PyTorch, Scikit-Learn, and building NLP pipelines using Hugging Face Transformers[cite: 9, 30]. I have extensive experience with deep learning, matrix factorization, clustering models, and vector search techniques[cite: 9, 10].
+Daniyal speaks English and Urdu natively. He is also fluent in Hindi and Sindhi, has intermediate Arabic, and basic conversational German.
 
-Q7: What is your experience with Agentic AI?
-A: I specialize in building autonomous AI agents using LangChain, LangGraph, and Claude Code[cite: 30, 65, 85]. I develop multi-step reasoning pipelines, ReAct tool calling, and agentic workflows for both e-commerce platforms and cybersecurity applications[cite: 25, 50, 94].
+---
 
-Q8: Can you describe your MLOps and Cloud tech stack?
-A: I build and deploy production-grade microservices using FastAPI, Docker, and SQL/NoSQL databases[cite: 9, 30]. I regularly use Google Cloud Platform, Google Vertex AI, Azure, and Databricks, orchestrating my deployments with automated CI/CD pipelines[cite: 10, 44, 45, 65].
+## Personal Interests
 
-Q9: What was your primary role at VEchain - GreenCart?
-A: As a Data Scientist, I architected and deployed a production-grade recommender engine serving 150,000 active users[cite: 7, 9]. I also built a specialized RAG Agent chatbot using Google Vertex AI that reduced customer queries by 60%[cite: 10, 44].
-
-Q10: How did you handle messy data at GreenCart?
-A: I built robust ETL pipelines to clean noisy OCR data[cite: 9]. By applying NLP, RegEx, and Hugging Face Transformers, I successfully detected semantic similarities across over 1 million rows of structured and unstructured user data[cite: 9, 46].
-
-Q11: How do you communicate technical concepts to business stakeholders?
-A: I act as a technical ambassador. At GreenCart, I translated complex RAG architectures into actionable business cases, successfully securing executive buy-in from non-technical stakeholders to drive cross-functional product adoption[cite: 79, 80].
-
-Q12: What did you do at the UoG Centre For Sustainable Cybersecurity?
-A: I worked as a Research Developer, a role with a highly competitive <10% acceptance rate[cite: 13, 84]. I built AI Agents to automate experiment workflows specifically aimed at researching LLM capability gaps for formal software verification[cite: 14, 50].
-
-Q13: How did you optimize LLM performance during your cybersecurity research?
-A: I iteratively engineered and refined system prompts to optimize tool calling functionality and strictly minimize token usage[cite: 14, 85]. This ensured the LLMs generated highly relevant and cost-effective outputs[cite: 14, 85].
-
-Q14: What did you achieve while working at Tata Technologies?
-A: As a Developing Engineer, I consulted for global automotive clients like Jaguar Land Rover[cite: 17, 52]. I delivered end-to-end automation solutions that reduced the engineering team's manual workload by over 400 hours annually[cite: 18, 54].
-
-Q15: Can you give an example of a data-driven solution you delivered at Tata?
-A: I developed an unsupervised learning model utilizing Apriori and XGBoost to predict over 30 fault patterns[cite: 21]. I visualized these insights using Streamlit, which directly improved the reliability of a 600+ vehicle fleet[cite: 21, 56].
-
-Q16: How did you improve sustainability at Tata Technologies?
-A: I automated the data mining process for vehicle bills of materials using Python[cite: 19, 55]. This provided clear insights that directly increased overall vehicle recyclability by 12%, aligning perfectly with our industrial decarbonization goals[cite: 19, 55].
-
-Q17: Tell me about your experience at the Agentic AI Hackathon.
-A: I won 3rd place and a £2000 prize in April 2026 for building 'AgentCommerce'[cite: 23, 24]. It is an end-to-end agentic shopping assistant utilizing the x402 protocol, demonstrating how autonomous AI agents can execute real commercial transactions[cite: 25, 94].
-
-Q18: What was your winning project at the ClimateImpact Hackathon?
-A: In June 2025, my team was awarded 1st place for Impact out of 15 competing teams[cite: 26, 27, 28]. We conceptualized and developed an AI Assistant specifically designed to evaluate and de-risk agricultural loans for farmers[cite: 28, 61].
-
-Q19: Have you received any notable academic scholarships?
-A: Yes, I received the prestigious Greenwich Scholarship Award in January 2025[cite: 32, 33]. This provided a full tuition fee waiver, which is an honor awarded to less than 5% of the student body[cite: 32, 67].
-
-Q20: Tell me about a time you went above and beyond for a customer.
-A: While at Bosch customer support, I exceeded my KPI of resolving issues within 72 hours, placing in the top 5% of staff[cite: 103, 138]. I proactively proposed a new queue system to leadership to better handle difficult customer processes[cite: 103, 138].
-
-Q21: How do you handle a customer who doesn't know what they want?
-A: At Tata, a client was unhappy with progress visibility. I took initiative to secure a PowerBI license, created a custom dashboard parsing 1200 JIRA tickets, and focused strictly on key deliverables, resulting in an 87% NPS score[cite: 138, 139].
-
-Q22: Give an example of how you apply frugality in your work.
-A: I needed to run testing for a startup where an external house quoted £30k[cite: 150]. I realized we could do it internally using our own operators, flew to the Vietnam HQ, and saved the company £22,000[cite: 127, 128, 150].
-
-Q23: Tell me about a time you showed "Ownership" on a project.
-A: At Bosch, I took on a vital project to merge roles across 30 suppliers[cite: 141]. By stepping up, I successfully reduced processing time by a third and improved the departmental problem resolution KPI by 30%[cite: 104, 141].
-
-Q24: Can you provide an example of "Invent and Simplify"?
-A: During an EU automation project at Tata, I developed a custom solution that improved workflow efficiency by 30% compared to manual processes[cite: 105, 142]. This simplified tool saved the equivalent of one full-time engineer's workload[cite: 105, 142].
-
-Q25: Tell me about a time you disagreed with a teammate (Have Backbone).
-A: At Bosch, I strongly disagreed with internal IT regarding UI improvements[cite: 114, 142]. I maintained constant communication, viewed the problem from their perspective, and though we didn't agree on everything, we compromised[cite: 115, 144]. The resulting webapp increased users by 40%[cite: 116, 145].
-
-Q26: Have you ever had to push back on a stakeholder who thought they were right?
-A: Yes, validating a manual, an engineer inputted incorrect data for 50 components[cite: 107, 145]. They wouldn't listen initially, so I called an all-hands meeting and provided concrete examples[cite: 107, 145]. The engineer was convinced and redid the work correctly[cite: 107, 145].
-
-Q27: Tell me about a professional mistake you made and what you learned.
-A: I once used incorrect Excel formulas for a massive 70k component calculation because I didn't validate the legal interpretations early enough[cite: 108, 146]. I learned to always double-check and validate assumptions with stakeholders before diving into execution[cite: 108, 147].
-
-Q28: How do you demonstrate "Learn and Be Curious"?
-A: To aggressively improve my presentation skills, I watched 8 TED talks and attended a professional public speaking conference[cite: 109, 148]. This proactive approach helped me keep presentations on track 100% of the time, boosting my annual review[cite: 109, 148].
-
-Q29: Tell me about a time you insisted on the highest standards.
-A: While leading 3 developers to create recyclability software, I insisted on creating 4 highly comprehensive documentation requirements[cite: 109, 149]. The resulting tool improved timings by 70%, became an Innovista finalist, and successfully integrated into major client projects[cite: 149].
-
-Q30: Tell me about a time you had to "Bias for Action" without enough data.
-A: A supplier lead time was entirely incorrect, risking a 5-day delay and £2,000 in storage costs[cite: 111, 151]. I took a calculated risk to implement a temporary on-site solution without full data, successfully keeping the project on schedule[cite: 111, 151].
-
-Q31: How do you handle tight deadlines and high risk?
-A: During a time-critical vehicle testing project with a 2-week deadline, we lost 2 days due to a vendor error[cite: 152, 154]. I set up daily standups, mitigated risks dynamically, and delivered 100% of tests a day early with a 90% NPS[cite: 155, 156].
-
-Q32: How do you build trust with external vendors and partners?
-A: While developing a software tool, I needed an IMDS trial[cite: 139]. I built strong rapport with the vendor's senior commercial manager and successfully negotiated a 6-month extended trial, saving £2,000 per month and earning mutual trust[cite: 140].
-
-Q33: Tell me about a time you had to "Dive Deep" into data.
-A: To analyze EV charging port infrastructure, I wrote 8 complex SQL queries to parse through over 1 million data points[cite: 113, 152]. I successfully identified the top 10 optimal counties, securing a 3-month extendable contract through my audit[cite: 113, 152].
-
-Q34: Tell me about a time you realized your own idea was wrong.
-A: I wanted to create a locally installed software package, but my developer suggested a webapp[cite: 118, 157]. I did my own research, realized his approach was far more scalable, and fully pivoted to support his idea, which became an award finalist[cite: 118, 157].
-
-Q35: How have you improved team culture and communication?
-A: As a PM, I noticed we were wasting time repeating mistakes[cite: 119, 159]. I instituted a mandatory 30-minute monthly "lessons learnt" session[cite: 120, 161]. This simple change improved team morale by 30% and decreased our KPI delays by 10%[cite: 123, 124, 164, 165].
-
-Q36: How do you balance sustainability goals with strict cost constraints?
-A: On a trim project, a sustainable part reduced carbon by 1% but cost £300 more[cite: 166]. Knowing our marketing didn't rely on this metric, I chose the cost-effective option, realizing frugality shouldn't blindly sacrifice overarching business strategy[cite: 166, 167, 168].
-
-Q37: What was the most challenging aspect of your AgentCommerce hackathon project?
-A: The hardest part was wiring the AI agent to a live Hedera blockchain at 3 AM. Transaction confirmation times are unforgiving, and dealing with message payload chunking was painful, but making the agent spend real crypto autonomously was incredibly rewarding.
-
-Q38: How does the AgentCommerce platform actually work?
-A: A Shopify vendor installs a single plugin to publish their catalogue to a blockchain registry. Then, an AI agent interprets a user's intent (e.g., "buy batteries"), finds the best price, and executes a real cryptocurrency payment seamlessly.
-
-Q39: What was the architecture of your formal software verification project?
-A: I built an automated LangGraph framework. It utilized a graph architecture to execute ReAct tool calling, leveraged agentic memory, and integrated Human-in-the-Loop patterns to formally verify Python code against strict Why3 mathematical standards.
-
-Q40: Do you have experience with Vector Databases?
-A: Yes, I have deployed end-to-end production-grade recommender engines utilizing FAISS for lightning-fast similarity search[cite: 44]. I also frequently use Vector Search within Google Vertex AI to power highly accurate RAG chatbot pipelines[cite: 44].
-
-Q41: What do you do for fun outside of coding and engineering?
-A: I love staying active! I am an avid cyclist—I actually converted my own road bike into an e-bike recently. I also enjoy running, playing cricket, football, and badminton[cite: 31]. When I am indoors, I am a huge fan of flight simulators[cite: 31].
-
-Q42: How do you recharge from living in a busy city?
-A: I absolutely thrive on the energy of London, but to find balance and take the edge off, I make sure to escape to nature regularly. Hiking is my favorite way to disconnect, reset, and recharge before diving back into deep technical work.
-
-Q43: Are you a good cook?
-A: I like to think so! I am known for doing large-batch cooking, usually prepping about 1.5kg of chicken at a time. My specialties are making homemade chicken shawarma, greek gyros, and a really rich, authentic butter chicken.
-
-Q44: Can you describe your approach to prompt engineering?
-A: I view prompt engineering as an iterative systems design task. I rigorously test and refine system prompts to strictly optimize token usage and guarantee predictable tool-calling behavior, ensuring the AI agent stays perfectly on rails in a production environment[cite: 50, 85].
-
-Q45: How did you get buy-in for your data-driven fleet testing at Tata?
-A: I delivered the telemetry project within an agile team framework[cite: 20, 55]. By rapidly prototyping the solution and clearly demonstrating a projected 30% cost reduction, I secured immediate buy-in from domain experts, even under immense pressure[cite: 20, 55].
-
-Q46: What kind of impact did your GreenCart recommendation system have?
-A: By matching semantic similarity using transformer models, the system achieved a 65% accuracy rate in recommending sustainable items[cite: 46]. Running as a FastAPI microservice, it efficiently scaled to serve our entire 150,000 user base reliably[cite: 45].
-
-Q47: How did you handle the conflict with Martin over the VIAQ testing?
-A: A test failed, and the engineer refused to redo it despite a looming deadline[cite: 116, 156]. Lacking deep data, I did a rapid cost-benefit analysis. Delaying homologation was costlier than absorbing the re-test cost, so I mandated a re-test, saving 2 weeks[cite: 117, 156].
-
-Q48: What is your experience with CI/CD and deployment?
-A: I build highly automated CI/CD pipelines utilizing Docker and Google Cloud Build[cite: 9, 80]. I prioritize automating deployments so I can confidently push production-grade microservices to thousands of users without ever risking overarching system reliability[cite: 9, 80].
-
-Q49: Do you enjoy mentoring or helping others develop?
-A: Absolutely. I've previously provided structured English language tutoring to students. In a corporate setting, when I saw a colleague struggling with ticket resolution, I actively supported them to improve their metrics by 40% and boost their annual review[cite: 109].
-
-Q50: What makes you uniquely positioned for AI engineering roles?
-A: My background uniquely merges heavy mechanical engineering with advanced computer science[cite: 37, 38]. Because I deeply understand both physical automotive systems and modern LLM orchestration, I excel at building highly pragmatic AI solutions that solve real-world industrial problems.
-
-# Daniyal Siddiqui - RAG Agent Knowledge Base (Part 2: Expanded Tech & Product Focus)
-
-## Product Vision & Strategy
-
-Q51: How do you align technical ML solutions with product KPIs?
-A: I fundamentally believe that machine learning models must map directly to business metrics, otherwise they are just academic exercises. For instance, at GreenCart, my objective wasn't simply to build a RAG chatbot using Google Vertex AI. The product goal was to optimize our support funnel. By focusing the architecture on parsing our specific documents and integrating it into the client's mobile application, I successfully reduced customer queries by 60%. I ensure alignment by acting as a technical ambassador, translating complex RAG architectures into actionable business insights so stakeholders understand the ROI before deployment.
-
-Q52: Product managers often lack technical AI knowledge. How do you bridge the gap?
-A: I bridge this gap by acting as a dedicated technical ambassador between the engineering floor and the executive suite. I focus conversations on the "why" and "what," rather than getting bogged down in the "how." For example, when proposing new ML features at GreenCart or Tata Technologies, I explicitly presented the business cases to non-technical stakeholders. By translating complex concepts like Retrieval-Augmented Generation or matrix factorization into clear business outcomes—such as projected reductions in manual workload or improvements in customer retention—I secure crucial executive buy-in and drive product adoption.
-
-Q53: How did your AgentCommerce hackathon address a real product need?
-A: Instead of building an isolated developer demo, my team specifically tackled the cold-start problem in decentralized e-commerce by building a highly practical Shopify plugin. We realized vendors wouldn't migrate platforms just for AI. By allowing vendors to install a single plugin, their entire catalogue is instantly published to a Hedera blockchain registry, making them immediately discoverable by AI agents. This product-led approach meant the technology was instantly usable by existing businesses, which is precisely why the judges praised our end-to-end integration and awarded us 3rd place and the £2000 prize.
-
-Q54: What was the primary user problem solved by your Tata automation tools?
-A: Automotive engineers at tier-1 clients like Jaguar Land Rover were bogged down by incredibly manual, repetitive compliance and data extraction checks. This tedious work actively delayed core vehicle development. By operating autonomously to deliver end-to-end automation solutions, I directly addressed this bottleneck. I automated the data mining process for bills of materials using Python, which not only visualized vital insights but reduced the engineering team's manual workload by over 400 hours annually. This allowed highly skilled engineers to refocus their efforts on critical design work and increased vehicle recyclability by 12%.
-
-Q55: How do you prioritize feature development when resources are tight?
-A: I rely heavily on rapid cost-benefit analysis and MVP delivery. For example, when I needed to execute testing for a startup client, an external test house quoted an exorbitant £30,000. Instead of blindly accepting the cost or cutting the feature, I discussed the requirements internally. I determined we could utilize our own operators to achieve the same standard. By flying out to the company HQ in Vietnam and executing the testing myself, I saved the project £22,000 while maintaining strict quality standards, proving that frugality doesn't have to mean compromising the product.
-
-Q56: What product metrics do you track for a recommender system?
-A: While standard technical metrics like R2, precision, recall, and top-K are vital for offline model evaluation, they don't tell the full product story. For the recommender engine I deployed at GreenCart, I tracked how semantic similarity mapping directly influenced user engagement across our 150,000 active users. Ultimately, the true measure of success was the conversion rate—how effectively the FAISS-powered recommendations drove users to interact with and purchase sustainable affiliate items. If precision is high but click-through rates remain low, the model is failing the product strategy.
+Outside of work, Daniyal stays active through cycling (he recently converted his own road bike into an e-bike), running, cricket, football, and badminton. He enjoys flight simulators and hiking. In the kitchen, he is known for large-batch cooking — his go-to dishes are chicken shawarma, Greek gyros, and butter chicken.
