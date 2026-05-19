@@ -1,0 +1,7 @@
+.git/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+chat-widget.html
+*.md

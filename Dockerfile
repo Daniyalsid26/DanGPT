@@ -2,12 +2,20 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Install uv — much faster than pip
+RUN pip install --no-cache-dir uv
 
-# Pre-download ONNX embedding model into image cache (avoids cold-start delay)
+# --- Heavy deps (fastembed + onnxruntime + numpy) in their own layer.
+# This layer is cached and skipped on re-deploys as long as requirements-heavy.txt is unchanged.
+COPY requirements-heavy.txt .
+RUN uv pip install --system --no-cache -r requirements-heavy.txt
+
+# Pre-download ONNX embedding model while the heavy layer is fresh (avoids cold-start delay)
 RUN python -c "from fastembed import TextEmbedding; list(TextEmbedding('sentence-transformers/all-MiniLM-L6-v2').embed(['warmup']))"
+
+# --- Light deps (fastapi, uvicorn, groq, etc.)
+COPY requirements.txt .
+RUN uv pip install --system --no-cache -r requirements.txt
 
 # Copy app source
 COPY . .
