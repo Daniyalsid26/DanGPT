@@ -84,7 +84,7 @@ async def health():
 
 
 @app.post("/chat")
-@limiter.limit("5/minute")
+@limiter.limit("10/minute")
 async def chat(request: Request, body: ChatRequest):
     # Embed query and normalise
     query_vec = np.array(list(_embed_model.embed([body.message]))[0], dtype="float32")
