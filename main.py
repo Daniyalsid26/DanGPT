@@ -40,6 +40,8 @@ app.add_middleware(
 # ---------------------------------------------------------------------------
 _embed_model = None
 _chunks: list[str] = []
+_profile_chunks: list[str] = []
+_behavioral_chunks: list[str] = []
 _embeddings = None
 _index_ready = False
 _bm25 = None
@@ -48,6 +50,12 @@ _bm25 = None
 # ---------------------------------------------------------------------------
 # BM25 scoring — lightweight keyword matching (no external dependencies)
 # ---------------------------------------------------------------------------
+def _tokenize(text: str) -> list[str]:
+    """Lowercase and strip punctuation to prevent token mismatch (e.g. 'skills?' vs 'skills')."""
+    cleaned = re.sub(r"[^\w\s]", "", text.lower())
+    return cleaned.split()
+
+
 class BM25:
     """Okapi BM25 ranking for keyword-based retrieval."""
 
@@ -59,7 +67,7 @@ class BM25:
 
         df: dict[str, int] = {}
         for doc in corpus:
-            tokens = doc.lower().split()
+            tokens = _tokenize(doc)
             self._doc_lens.append(len(tokens))
             freq = Counter(tokens)
             self._tf.append(freq)
@@ -71,7 +79,7 @@ class BM25:
             self._idf[term] = math.log((self.n - count + 0.5) / (count + 0.5) + 1.0)
 
     def score(self, query: str) -> np.ndarray:
-        tokens = query.lower().split()
+        tokens = _tokenize(query)
         scores = np.zeros(self.n, dtype="float32")
         for i, tf in enumerate(self._tf):
             dl = self._doc_lens[i]
@@ -149,17 +157,28 @@ def _expand_query(query: str) -> str:
 
 
 def _build_index() -> None:
-    global _embed_model, _chunks, _embeddings, _bm25, _index_ready
+    global _embed_model, _chunks, _profile_chunks, _behavioral_chunks, _embeddings, _bm25, _index_ready
     print("Loading embedding model...", flush=True)
     _embed_model = TextEmbedding("sentence-transformers/all-MiniLM-L6-v2")
     print("Building vector index...", flush=True)
     _chunks = load_chunks()
-    _embeddings = np.array(list(_embed_model.embed(_chunks)), dtype="float32")
+    
+    # Classify chunks into profile and behavioral
+    _profile_chunks = []
+    _behavioral_chunks = []
+    for c in _chunks:
+        if "Situation:" in c and "Result:" in c:
+            _behavioral_chunks.append(c)
+        else:
+            _profile_chunks.append(c)
+            
+    # We only embed and index the behavioral chunks for search
+    _embeddings = np.array(list(_embed_model.embed(_behavioral_chunks)), dtype="float32")
     _embeddings /= np.linalg.norm(_embeddings, axis=1, keepdims=True)
     print("Building BM25 index...", flush=True)
-    _bm25 = BM25(_chunks)
+    _bm25 = BM25(_behavioral_chunks)
     _index_ready = True
-    print(f"Index ready — {len(_chunks)} chunks.", flush=True)
+    print(f"Index ready — {len(_profile_chunks)} profile chunks, {len(_behavioral_chunks)} behavioral chunks.", flush=True)
 
 
 # Start immediately; uvicorn binds to port while this runs in the background
@@ -324,7 +343,7 @@ async def chat(request: Request, body: ChatRequest):
     query_vec = np.array(list(_embed_model.embed([expanded]))[0], dtype="float32")
     query_vec /= np.linalg.norm(query_vec)
 
-    # Hybrid search: combine vector cosine similarity with BM25 keyword scores
+    # Hybrid search: combine vector cosine similarity with BM25 keyword scores over behavioral chunks
     vec_scores = _embeddings @ query_vec
     bm25_scores = _bm25.score(expanded)
 
@@ -336,8 +355,21 @@ async def chat(request: Request, body: ChatRequest):
     alpha = 0.65  # vector weight
     combined = alpha * _norm(vec_scores) + (1 - alpha) * _norm(bm25_scores)
 
-    top_idx = np.argsort(combined)[-5:][::-1]
-    context = "\n\n---\n\n".join(_chunks[i] for i in top_idx)
+    # Retrieve top 3 matching behavioral chunks
+    top_idx = np.argsort(combined)[-3:][::-1]
+    retrieved_behavioral = [_behavioral_chunks[i] for i in top_idx]
+
+    # Construct the final context
+    profile_context = "\n\n---\n\n".join(_profile_chunks)
+    behavioral_context = "\n\n---\n\n".join(retrieved_behavioral)
+    
+    context = (
+        "CORE PROFILE CONTEXT (Use this to answer factual questions about Daniyal's jobs, education, and skills):\n"
+        f"{profile_context}\n\n"
+        "==================================================\n\n"
+        "SPECIFIC BEHAVIORAL & PROJECT STORIES (Use these to answer questions about challenges, conflict, cost savings, or specific tasks):\n"
+        f"{behavioral_context}"
+    )
 
     # Call Groq (Llama-3.1)
     system_with_context = f"{SYSTEM_PROMPT}\n\nContext about Daniyal:\n{context}"
