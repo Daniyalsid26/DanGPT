@@ -13,10 +13,10 @@ if not main._index_ready:
     main._build_index()
 
 
-def _mock_groq() -> MagicMock:
+def _mock_groq(content: str = "Mock response") -> MagicMock:
     mock_groq = MagicMock()
     mock_choice = MagicMock()
-    mock_choice.message.content = "Mock response"
+    mock_choice.message.content = content
     mock_response = MagicMock()
     mock_response.choices = [mock_choice]
     mock_groq.chat.completions.create.return_value = mock_response
@@ -71,3 +71,33 @@ def test_chat_uses_raw_user_message_not_data_wrapper() -> None:
     assert messages[-1]["role"] == "user"
     assert messages[-1]["content"] == "how is that related to ai"
     assert "USER_DATA_TO_PROCESS" not in messages[-1]["content"]
+
+
+def test_chat_caps_default_response_to_85_words() -> None:
+    long_reply = " ".join([f"word{i}" for i in range(1, 131)])
+    _mock_groq(long_reply)
+    client = TestClient(main.app)
+
+    response = client.post(
+        "/chat",
+        json={"message": "what has he built", "history": []},
+    )
+
+    assert response.status_code == 200
+    reply = response.json()["reply"]
+    assert len(reply.split()) == 85
+
+
+def test_chat_allows_long_response_when_user_asks_for_detail() -> None:
+    long_reply = " ".join([f"word{i}" for i in range(1, 131)])
+    _mock_groq(long_reply)
+    client = TestClient(main.app)
+
+    response = client.post(
+        "/chat",
+        json={"message": "please explain in detail what he has built", "history": []},
+    )
+
+    assert response.status_code == 200
+    reply = response.json()["reply"]
+    assert len(reply.split()) == 130

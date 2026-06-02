@@ -76,6 +76,14 @@ _FOLLOW_UP_REFERENCE_TERMS = {
     "same", "earlier", "previous", "former", "latter",
 }
 
+_LONG_ANSWER_HINTS = {
+    "detailed", "detail", "details", "in-depth", "indepth", "deep", "thorough",
+    "elaborate", "elaboration", "comprehensive", "extensive", "expanded", "long",
+    "longer", "full", "explain", "breakdown", "step-by-step", "stepwise", "why",
+}
+
+_MAX_RESPONSE_WORDS = 85
+
 
 # ---------------------------------------------------------------------------
 # BM25 scoring — lightweight keyword matching (no external dependencies)
@@ -454,7 +462,8 @@ SYSTEM_PROMPT = """You are DanGPT, a factual assistant that answers questions ab
 Your job is to answer naturally and concisely using only the supplied context about Daniyal plus assistant-side conversation history when needed to resolve follow-up references like "that" or "it".
 
 Rules:
-- Default to 1–3 sentences. Be concise, but do not sacrifice correctness for an arbitrary word limit.
+- Default to concise answers of 1–3 sentences and 85 words or fewer.
+- Only exceed 85 words when the user explicitly asks for a detailed or long explanation.
 - Use only facts explicitly stated in the supplied context. Never invent missing details.
 - If the answer is not stated, say exactly: "I don't have that detail on Daniyal."
 - Use the exact titles, companies, and relationships from the context. Do not upgrade or rewrite them.
@@ -614,6 +623,26 @@ def _is_injection(text: str) -> bool:
     return False
 
 
+def _wants_long_answer(message: str) -> bool:
+    lower = message.lower()
+    tokens = set(_tokenize_raw(lower))
+
+    if any(hint in lower for hint in ["more detail", "more details", "in depth", "long explanation", "full explanation"]):
+        return True
+
+    if tokens & _LONG_ANSWER_HINTS:
+        return True
+
+    return False
+
+
+def _trim_to_word_limit(text: str, limit: int) -> str:
+    words = text.split()
+    if len(words) <= limit:
+        return text.strip()
+    return " ".join(words[:limit]).strip()
+
+
 @app.post("/chat")
 @limiter.limit("10/minute")
 async def chat(request: Request, body: ChatRequest):
@@ -656,6 +685,10 @@ async def chat(request: Request, body: ChatRequest):
     )
 
     reply = completion.choices[0].message.content.strip()
+
+    if not _wants_long_answer(body.message):
+        reply = _trim_to_word_limit(reply, _MAX_RESPONSE_WORDS)
+
     if _OUTPUT_LEAK_PATTERN.search(reply):
         return {"reply": "I can only answer questions about Daniyal Siddiqui."}
     return {"reply": reply}
