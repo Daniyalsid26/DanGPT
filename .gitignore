@@ -10,3 +10,6 @@ build/
 *.faiss
 venv/
 .venv/
+scratch/
+pyrightconfig.json
+test_rag_quality.py

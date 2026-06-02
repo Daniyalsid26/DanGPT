@@ -6,6 +6,7 @@ from collections import Counter
 import numpy as np
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from fastembed import TextEmbedding
 from groq import Groq
@@ -178,7 +179,17 @@ threading.Thread(target=_build_index, daemon=True).start()
 # ---------------------------------------------------------------------------
 # Groq client
 # ---------------------------------------------------------------------------
-_groq = Groq(api_key=os.environ["GROQ_API_KEY"])
+_groq_api_key = os.getenv("GROQ_API_KEY")
+_groq = Groq(api_key=_groq_api_key) if _groq_api_key else None
+
+
+def _get_groq_client() -> Groq:
+    if _groq is None:
+        raise HTTPException(
+            status_code=503,
+            detail="GROQ_API_KEY is not configured on the server.",
+        )
+    return _groq
 
 SYSTEM_PROMPT = """You are an elite Technical Recruiter and Technical Product Manager with over 20 years of experience placing top-tier AI, ML, and Software Engineering talent into hyper-growth tech companies, Fortune 100 enterprises, and cutting-edge AI startups.
 
@@ -224,9 +235,44 @@ async def root():
     return {"status": "ok"}
 
 
+def _health_payload() -> tuple[int, dict[str, object]]:
+    chunk_count = len(_chunks)
+    embedding_count = int(_embeddings.shape[0]) if _embeddings is not None else 0
+
+    checks = {
+        "groq_configured": _groq is not None,
+        "index_ready": _index_ready,
+        "embedding_model_loaded": _embed_model is not None,
+        "bm25_ready": _bm25 is not None,
+        "chunks_loaded": chunk_count > 0,
+        "embeddings_ready": _embeddings is not None,
+        "embedding_count_matches_chunks": _embeddings is not None and embedding_count == chunk_count,
+    }
+
+    healthy = all(checks.values())
+    status_code = 200 if healthy else 503
+    status = "ok" if healthy else "degraded"
+
+    return status_code, {
+        "status": status,
+        "ready": healthy,
+        "checks": checks,
+        "chunk_count": chunk_count,
+        "embedding_count": embedding_count,
+    }
+
+
 @app.get("/health")
 async def health():
-    return {"status": "ok", "ready": _index_ready}
+    status_code, payload = _health_payload()
+    return JSONResponse(status_code=status_code, content=payload)
+
+
+@app.get("/healthz")
+async def healthz():
+    """Alias for uptime monitors that conventionally probe /healthz."""
+    status_code, payload = _health_payload()
+    return JSONResponse(status_code=status_code, content=payload)
 
 
 # ---------------------------------------------------------------------------
@@ -325,6 +371,8 @@ async def chat(request: Request, body: ChatRequest):
     if not _index_ready:
         raise HTTPException(status_code=503, detail="Service is warming up, please try again in a moment.")
 
+    groq_client = _get_groq_client()
+
     if _is_injection(body.message):
         return {"reply": "I can only answer questions about Daniyal Siddiqui."}
 
@@ -357,7 +405,7 @@ async def chat(request: Request, body: ChatRequest):
     # Call Groq (Llama-3.1)
     system_with_context = f"{SYSTEM_PROMPT}\n\nContext about Daniyal:\n{context}"
     history_messages = [{"role": item.role, "content": item.content} for item in body.history[-6:]]
-    completion = _groq.chat.completions.create(
+    completion = groq_client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[
             {"role": "system", "content": system_with_context},
