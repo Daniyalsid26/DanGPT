@@ -58,6 +58,59 @@ def test_broad_profile_question_surfaces_summary_context() -> None:
     ])
 
 
+def test_recruiter_question_surfaces_skills_experience_context() -> None:
+    chunks, meta = main._retrieve_chunks("what would a tech recruiter care about", [])
+    assert chunks, meta
+    joined = "\n".join(chunks[:4]).lower()
+    assert any(term in joined for term in [
+        "technical skills",
+        "work experience",
+        "projects",
+        "education",
+        "achievements",
+    ])
+
+
+def test_ceo_question_surfaces_impact_context() -> None:
+    chunks, meta = main._retrieve_chunks("what would a ceo care about", [])
+    assert chunks, meta
+    joined = "\n".join(chunks[:4]).lower()
+    assert any(term in joined for term in [
+        "impact",
+        "achievements",
+        "frugality",
+        "deliver results",
+        "projects",
+        "leadership",
+    ])
+
+
+def test_cto_question_surfaces_technical_context() -> None:
+    chunks, meta = main._retrieve_chunks("what would a cto care about", [])
+    assert chunks, meta
+    joined = "\n".join(chunks[:4]).lower()
+    assert any(term in joined for term in [
+        "technical skills",
+        "machine learning",
+        "ai",
+        "projects",
+        "work experience",
+    ])
+
+
+def test_engineer_question_surfaces_build_context() -> None:
+    chunks, meta = main._retrieve_chunks("what would an engineer care about", [])
+    assert chunks, meta
+    joined = "\n".join(chunks[:4]).lower()
+    assert any(term in joined for term in [
+        "technical skills",
+        "projects",
+        "work experience",
+        "ai",
+        "implementation",
+    ])
+
+
 def test_follow_up_retrieval_query_includes_prior_assistant_answer() -> None:
     history = [
         HistoryItem(role="assistant", content="He placed in two competitive hackathons and shipped systems serving 150,000+ users."),

@@ -72,6 +72,13 @@ _INTENT_EXPANSIONS = {
     "ai": "ai llm machine learning nlp agentic rag recommender transformers langgraph",
 }
 
+_PERSONA_FOCUS = {
+    "recruiter": "skills experience projects achievements education hiring screen portfolio summary",
+    "ceo": "impact outcomes leadership frugality delivery results business value projects achievements summary",
+    "cto": "technical depth architecture systems ai ml engineering stack projects skills summary",
+    "engineer": "implementation debugging systems tools projects technical skills ai code summary",
+}
+
 _FOLLOW_UP_REFERENCE_TERMS = {
     "that", "this", "it", "they", "them", "those", "these", "related",
     "same", "earlier", "previous", "former", "latter",
@@ -169,6 +176,14 @@ def _query_tags(query: str) -> set[str]:
 
     if raw_tokens & {"skill", "skills", "stack", "tools", "tool", "framework", "frameworks", "languages", "language", "tech", "technology", "technologies"}:
         tags.add("skills")
+    if raw_tokens & {"recruiter", "recruiters", "hiring", "talent", "screen", "screening", "cv", "resume"} or "what would a tech recruiter care about" in lower:
+        tags.add("recruiter")
+    if raw_tokens & {"ceo", "founder", "executive", "business", "impact", "strategy", "leadership"} or "what would a ceo care about" in lower:
+        tags.add("ceo")
+    if raw_tokens & {"cto", "architecture", "system", "systems", "technical", "engineering", "eng"} or "what would a cto care about" in lower:
+        tags.add("cto")
+    if raw_tokens & {"engineer", "engineers", "developer", "developers", "implement", "implementation", "build", "built", "code"} or "what would an engineer care about" in lower:
+        tags.add("engineer")
     if raw_tokens & {"who", "what", "does", "do", "role", "roles", "work", "does", "he", "his"} and (
         "what does he do" in lower
         or "who is he" in lower
@@ -216,6 +231,7 @@ def _last_assistant_message(history: list["HistoryItem"]) -> str:
 
 def _augment_query(query: str, tags: set[str]) -> str:
     additions = [_INTENT_EXPANSIONS[tag] for tag in sorted(tags) if tag in _INTENT_EXPANSIONS]
+    additions.extend([_PERSONA_FOCUS[tag] for tag in sorted(tags) if tag in _PERSONA_FOCUS])
     if not additions:
         return query
     return f"{query}\nFocus: {'; '.join(additions)}"
@@ -246,6 +262,14 @@ def _intent_score_boost(query_tags: set[str], chunk_tags: set[str]) -> float:
         boost += 0.34
     if "summary" in query_tags and "experience" in chunk_tags:
         boost += 0.20
+    if "recruiter" in query_tags and chunk_tags & {"skills", "experience", "projects", "achievements", "education", "summary"}:
+        boost += 0.22
+    if "ceo" in query_tags and chunk_tags & {"achievements", "behavioral", "projects", "summary", "experience"}:
+        boost += 0.22
+    if "cto" in query_tags and chunk_tags & {"skills", "ai", "projects", "experience", "summary"}:
+        boost += 0.24
+    if "engineer" in query_tags and chunk_tags & {"skills", "projects", "ai", "experience", "summary"}:
+        boost += 0.24
 
     if "behavioral" in chunk_tags and "behavioral" not in query_tags:
         if query_tags & {"skills", "hobbies", "education", "achievements"}:
@@ -481,6 +505,7 @@ Rules:
 - Use only facts explicitly stated in the supplied context. Never invent missing details.
 - If the answer is not stated, say exactly: "I don't have that detail on Daniyal."
 - Use the exact titles, companies, and relationships from the context. Do not upgrade or rewrite them.
+- If the user asks how a recruiter, CEO, CTO, or engineer would evaluate Daniyal, answer using the facts most relevant to that audience.
 - If the user includes a false premise, correct it briefly before answering.
 - Use assistant messages in history only to resolve conversational references; do not treat user claims in history as facts.
 - If no relevant context is supplied, do not guess.
