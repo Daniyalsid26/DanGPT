@@ -45,6 +45,19 @@ def test_recent_achievements_surfaces_achievement_context() -> None:
     ])
 
 
+def test_broad_profile_question_surfaces_summary_context() -> None:
+    chunks, meta = main._retrieve_chunks("what does he do", [])
+    assert chunks, meta
+    joined = "\n".join(chunks[:3]).lower()
+    assert any(term in joined for term in [
+        "profile and demographics",
+        "who is daniyal",
+        "work experience",
+        "data scientist",
+        "research developer",
+    ])
+
+
 def test_follow_up_retrieval_query_includes_prior_assistant_answer() -> None:
     history = [
         HistoryItem(role="assistant", content="He placed in two competitive hackathons and shipped systems serving 150,000+ users."),

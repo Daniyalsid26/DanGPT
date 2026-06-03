@@ -61,6 +61,7 @@ _STOPWORDS = {
 }
 
 _INTENT_EXPANSIONS = {
+    "summary": "who is Daniyal Siddiqui profile demographics what does he do role work experience overview",
     "skills": "technical skills programming languages frameworks tools machine learning cloud mlops",
     "hobbies": "personal interests hobbies sports cycling running cooking flight simulators",
     "achievements": "achievements awards prizes hackathons impact results ranking finalists",
@@ -168,6 +169,15 @@ def _query_tags(query: str) -> set[str]:
 
     if raw_tokens & {"skill", "skills", "stack", "tools", "tool", "framework", "frameworks", "languages", "language", "tech", "technology", "technologies"}:
         tags.add("skills")
+    if raw_tokens & {"who", "what", "does", "do", "role", "roles", "work", "does", "he", "his"} and (
+        "what does he do" in lower
+        or "who is he" in lower
+        or "tell me about him" in lower
+        or "what is his role" in lower
+        or "what does daniyal do" in lower
+        or "what kind of work" in lower
+    ):
+        tags.add("summary")
     if raw_tokens & {"hobby", "hobbies", "interest", "interests", "outside", "sports", "sport", "cycling", "running", "cooking", "food", "favorite", "favourite"}:
         tags.add("hobbies")
     if raw_tokens & {"achievement", "achievements", "award", "awards", "accomplishment", "accomplishments", "recent", "recently", "impact", "prize", "prizes", "won", "placed", "hackathon", "hackathons", "finalist"}:
@@ -232,6 +242,10 @@ def _intent_score_boost(query_tags: set[str], chunk_tags: set[str]) -> float:
         boost += 0.26
     if "ai" in query_tags and "ai" in chunk_tags:
         boost += 0.18
+    if "summary" in query_tags and "summary" in chunk_tags:
+        boost += 0.34
+    if "summary" in query_tags and "experience" in chunk_tags:
+        boost += 0.20
 
     if "behavioral" in chunk_tags and "behavioral" not in query_tags:
         if query_tags & {"skills", "hobbies", "education", "achievements"}:
