@@ -49,6 +49,14 @@ _embeddings = None
 _index_ready = False
 _bm25 = None
 
+_retrieval_cache: dict[str, tuple[list[str], dict]] = {}
+_MAX_CACHE_SIZE = 50
+
+def _cache_retrieval(key: str, result: tuple[list[str], dict]) -> None:
+    if len(_retrieval_cache) >= _MAX_CACHE_SIZE:
+        _retrieval_cache.pop(next(iter(_retrieval_cache)))
+    _retrieval_cache[key] = result
+
 _STOPWORDS = {
     "a", "an", "and", "are", "as", "at", "be", "been", "being", "but",
     "by", "can", "could", "did", "do", "does", "for", "from", "had",
@@ -293,6 +301,10 @@ def _build_retrieval_query(message: str, history: list["HistoryItem"]) -> str:
 
 
 def _retrieve_chunks(message: str, history: list["HistoryItem"], top_k: int = 5) -> tuple[list[str], dict[str, float | str | list[str]]]:
+    cache_key = message.strip().lower()
+    if not history and cache_key in _retrieval_cache:
+        return _retrieval_cache[cache_key]
+
     retrieval_query = _build_retrieval_query(message, history)
     query_tags = _query_tags(message)
     augmented_query = _augment_query(retrieval_query, query_tags)
@@ -303,11 +315,7 @@ def _retrieve_chunks(message: str, history: list["HistoryItem"], top_k: int = 5)
     vec_scores = _embeddings @ query_vec
     bm25_scores = _bm25.score(augmented_query)
 
-    def _norm(a: np.ndarray) -> np.ndarray:
-        lo, hi = a.min(), a.max()
-        return (a - lo) / (hi - lo) if hi > lo else np.zeros_like(a)
-
-    query_terms = set(_tokenize(message))
+    query_terms = set(_tokenize(augmented_query))
     overlap_scores = np.array([
         len(query_terms & chunk_terms) / max(1, len(query_terms))
         for chunk_terms in _chunk_terms
@@ -318,29 +326,40 @@ def _retrieve_chunks(message: str, history: list["HistoryItem"], top_k: int = 5)
     ], dtype="float32")
 
     combined = 0.58 * _norm(vec_scores) + 0.27 * _norm(bm25_scores) + 0.15 * overlap_scores + intent_boosts
-    top_idx = np.argsort(combined)[-top_k:][::-1]
 
-    max_vec = float(vec_scores[top_idx[0]]) if len(top_idx) else 0.0
-    max_bm25 = float(bm25_scores[top_idx[0]]) if len(top_idx) else 0.0
-    max_overlap = float(overlap_scores[top_idx[0]]) if len(top_idx) else 0.0
+    initial_top = 10
+    top_idx = np.argsort(combined)[-initial_top:][::-1]
+
+    qtl = list(query_terms)
+    query_bigrams = set(zip(qtl, qtl[1:]))
+    rerank_scores = _rerank(query_terms, query_bigrams, top_idx, _chunks, _chunk_terms, _bm25)
+    reranked_order = np.argsort(rerank_scores)[::-1]
+    reranked_idx = [top_idx[i] for i in reranked_order[:top_k]]
+
+    max_vec = float(vec_scores[reranked_idx[0]]) if len(reranked_idx) else 0.0
+    max_bm25 = float(bm25_scores[reranked_idx[0]]) if len(reranked_idx) else 0.0
+    max_overlap = float(overlap_scores[reranked_idx[0]]) if len(reranked_idx) else 0.0
     evidence_ready = max_bm25 > 0.0 or max_overlap >= 0.18 or max_vec >= 0.50
 
     if not evidence_ready:
-        return [], {
+        result: tuple[list[str], dict] = [], {
             "retrieval_query": retrieval_query,
             "query_tags": sorted(query_tags),
-            "top_score": float(combined[top_idx[0]]) if len(top_idx) else 0.0,
+            "top_score": float(combined[reranked_idx[0]]) if len(reranked_idx) else 0.0,
             "max_vec": max_vec,
             "max_bm25": max_bm25,
             "max_overlap": max_overlap,
         }
+        if not history:
+            _cache_retrieval(cache_key, result)
+        return result
 
-    best_score = float(combined[top_idx[0]])
-    filtered_idx = [idx for idx in top_idx if combined[idx] >= best_score - 0.35]
-    if not filtered_idx and len(top_idx):
-        filtered_idx = [int(top_idx[0])]
+    best_score = float(combined[reranked_idx[0]])
+    filtered_idx = [idx for idx in reranked_idx if combined[idx] >= best_score - 0.35]
+    if not filtered_idx and len(reranked_idx):
+        filtered_idx = [int(reranked_idx[0])]
 
-    return [_chunks[idx] for idx in filtered_idx], {
+    result = [_chunks[idx] for idx in filtered_idx], {
         "retrieval_query": retrieval_query,
         "query_tags": sorted(query_tags),
         "top_score": best_score,
@@ -348,6 +367,9 @@ def _retrieve_chunks(message: str, history: list["HistoryItem"], top_k: int = 5)
         "max_bm25": max_bm25,
         "max_overlap": max_overlap,
     }
+    if not history:
+        _cache_retrieval(cache_key, result)
+    return result
 
 
 class BM25:
@@ -386,6 +408,30 @@ class BM25:
                     f + self.k1 * (1 - self.b + self.b * dl / self._avgdl)
                 )
         return scores
+
+
+def _norm(a: np.ndarray) -> np.ndarray:
+    lo, hi = a.min(), a.max()
+    return (a - lo) / (hi - lo) if hi > lo else np.zeros_like(a)
+
+
+def _rerank(query_terms: set[str], query_bigrams: set[tuple[str, str]], indices: list[int], chunks: list[str], chunk_terms: list[set[str]], bm25: "BM25") -> np.ndarray:
+    """Lightweight phrase-aware reranker using IDF-weighted overlap + bigram bonus."""
+    scores = np.zeros(len(indices), dtype="float32")
+    for rank, idx in enumerate(indices):
+        c_terms = chunk_terms[idx]
+        c_tokens = _tokenize(chunks[idx])
+        c_bigrams = set(zip(c_tokens, c_tokens[1:]))
+
+        overlap = sum(bm25._idf.get(t, 1.0) for t in query_terms if t in c_terms)
+        bigram_matches = len(query_bigrams & c_bigrams)
+        lp = 1.0 - 0.3 * min(1.0, abs(len(c_tokens) - 50) / 150.0)
+
+        scores[rank] = overlap * lp + bigram_matches * 0.5
+
+    if scores.max() > scores.min():
+        scores = (scores - scores.min()) / (scores.max() - scores.min())
+    return scores
 
 
 # ---------------------------------------------------------------------------
@@ -446,7 +492,8 @@ def _expand_query(query: str) -> str:
     """Expand bare keyword queries so the embedding model has enough signal."""
     words = _tokenize_raw(query.strip())
     lower = query.strip().lower()
-    if len(words) <= 2:
+    meaningful = [w for w in words if w not in _STOPWORDS]
+    if len(words) <= 2 or (len(words) <= 3 and len(meaningful) <= 1):
         if "skill" in lower:
             return f"{query.strip()} technical skills programming languages frameworks tools"
         if "hobb" in lower or "interest" in lower:
@@ -461,20 +508,24 @@ def _expand_query(query: str) -> str:
 
 def _build_index() -> None:
     global _embed_model, _chunks, _chunk_tags, _chunk_terms, _embeddings, _bm25, _index_ready
-    print("Loading embedding model...", flush=True)
-    _embed_model = TextEmbedding("sentence-transformers/all-MiniLM-L6-v2")
-    print("Building vector index...", flush=True)
-    _chunks = load_chunks()
-    _chunk_tags = [_classify_chunk(chunk) for chunk in _chunks]
-    _chunk_terms = [set(_tokenize(chunk)) for chunk in _chunks]
-    
-    # Embed and index all chunks
-    _embeddings = np.array(list(_embed_model.embed(_chunks)), dtype="float32")
-    _embeddings /= np.linalg.norm(_embeddings, axis=1, keepdims=True)
-    print("Building BM25 index...", flush=True)
-    _bm25 = BM25(_chunks)
-    _index_ready = True
-    print(f"Index ready — {len(_chunks)} chunks.", flush=True)
+    try:
+        print("Loading embedding model...", flush=True)
+        _embed_model = TextEmbedding("sentence-transformers/all-MiniLM-L6-v2")
+        print("Building vector index...", flush=True)
+        _chunks = load_chunks()
+        _chunk_tags = [_classify_chunk(chunk) for chunk in _chunks]
+        _chunk_terms = [set(_tokenize(chunk)) for chunk in _chunks]
+        
+        # Embed and index all chunks
+        _embeddings = np.array(list(_embed_model.embed(_chunks)), dtype="float32")
+        _embeddings /= np.linalg.norm(_embeddings, axis=1, keepdims=True)
+        print("Building BM25 index...", flush=True)
+        _bm25 = BM25(_chunks)
+        _index_ready = True
+        print(f"Index ready — {len(_chunks)} chunks.", flush=True)
+    except Exception as e:
+        print(f"ERROR building index — {e}", flush=True)
+        _index_ready = False
 
 
 # Start immediately; uvicorn binds to port while this runs in the background

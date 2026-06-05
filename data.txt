@@ -61,27 +61,6 @@ Other tools: SQL, Node.js, Express.js, Hedera SDK, Streamlit, Power BI, Tableau,
 
 ---
 
-Profile and Demographics
-Daniyal Siddiqui is a London-based AI Research Developer and Data Scientist with over three years of experience building scalable machine learning microservices and automation pipelines. He uniquely bridges the gap between advanced physical systems and modern software orchestration due to his extensive background in mechanical engineering. He is a British citizen with Settled status in the United Kingdom and does not require visa sponsorship. He is highly multilingual, possessing native proficiency in English, Urdu, Hindi, and Sindhi, intermediate proficiency in Arabic, and a basic conversational understanding of German.
-
-Educational Background
-Daniyal holds a Master of Science in Computer Science with Distinction from the University of Greenwich, ranking first in his class with an 85% grade. Crucially, this degree is an MSc in Computer Science, not a dedicated MSc in Artificial Intelligence. He also holds a Master of Science in Mechanical Engineering with Merit from University College London (UCL) and a Bachelor of Engineering in Mechanical Engineering with First Class Honors from Coventry University. During his academic career, he was awarded the highly competitive Greenwich Scholarship Award, granting a full tuition fee waiver given to less than 5% of students.
-
-Core Technical Competencies
-Daniyal is an expert in the full machine learning stack, focusing heavily on Large Language Models (LLMs), natural language processing, and agentic workflows. His core programming languages are Python and SQL. His machine learning toolkit includes PyTorch, Scikit-Learn, and Hugging Face Transformers. For agentic AI and orchestration, he utilizes LangChain, LangGraph, and Claude Code to build multi-step reasoning pipelines and Human-in-the-Loop systems. He builds high-availability microservices using FastAPI and containerizes them with Docker. His cloud and MLOps ecosystem includes Google Cloud Platform (GCP), Google Vertex AI, Azure, and automated CI/CD pipelines.
-
-VEchain - GreenCart (Product & Recommender Engine)
-At GreenCart, Daniyal acted as a Data Scientist architecting a production-grade recommender engine that served 150,000 active users. He built robust ETL pipelines to clean highly noisy OCR data using advanced RegEx patterns and Hugging Face Transformers to detect deep semantic similarities across over 1 million rows of structured SQL and unstructured NoSQL data. To optimize the support funnel, he deployed a Retrieval-Augmented Generation (RAG) chatbot using Google Vertex AI and Vector Search, successfully reducing customer queries by 60%. All backend systems were decoupled using FastAPI microservices and Docker containers to ensure horizontal scalability during traffic spikes.
-
-UoG Centre For Sustainable Cybersecurity (Agentic AI Research)
-Working as a Research Developer—a role with a strict sub-10% acceptance rate—Daniyal researched the capability gaps of LLMs in automated software engineering. He built complex automated AI agents using Claude Code and LangGraph to formally verify Python code outputs against mathematical frameworks like Why3. By rigorously engineering system prompts, optimizing token usage, and implementing strict agentic memory patterns, he forced models to mathematically prove their logic and algorithm termination, virtually eliminating undetected hallucinations in generated code.
-
-Tata Technologies (Automotive Automation & Analytics)
-Operating autonomously as a Developing Engineer consulting for tier-1 automotive clients like Jaguar Land Rover, Daniyal delivered end-to-end automation solutions. He successfully deployed an unsupervised learning pipeline utilizing Apriori and XGBoost to predict over 30 distinct fault patterns, improving the reliability of a 600-vehicle fleet. To drive industrial decarbonization, he automated the data mining of complex vehicle bills of materials using Python, increasing overall vehicle recyclability by 12%. His automations drastically reduced the engineering team's manual workload by over 400 hours annually.
-
-Hackathons and Web3 Implementations
-Daniyal won 3rd place and a £2000 prize at the Agentic AI Hackathon for building AgentCommerce. This decentralized e-commerce platform solved the vendor cold-start problem by using a Shopify plugin to publish catalogues to a Hedera blockchain registry. He wired an x402 protocol AI agent to autonomously parse user intent and execute secure HBAR cryptocurrency payments. Additionally, he won 1st place for Impact at the ClimateImpact Hackathon by developing an AI Assistant explicitly designed to evaluate and de-risk agricultural loans for farmers.
-
 Product Strategy and Stakeholder Management
 Daniyal excels at acting as a technical ambassador, mapping model outputs directly to business metrics. When a client was unhappy with JIRA reporting, he pushed back against the status quo, secured a PowerBI license, and built an interactive dashboard parsing 1200 tickets into 6 distinct KPIs, raising the Net Promoter Score to 87%. He secures vital resources efficiently; during a recyclability project, he negotiated a 6-month extended trial of an enterprise IMDS tool, saving the project £2,000 monthly. He uses Streamlit dashboards to visualize complex machine learning outputs, securing rapid executive buy-in from non-technical stakeholders.
 
